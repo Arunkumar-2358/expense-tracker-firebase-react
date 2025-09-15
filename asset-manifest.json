@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Arunkumar-2358/expense-tracker-firebase-react/static/css/main.f1ef80bb.css",
+    "main.js": "/Arunkumar-2358/expense-tracker-firebase-react/static/js/main.c6d007dc.js",
+    "index.html": "/Arunkumar-2358/expense-tracker-firebase-react/index.html",
+    "main.f1ef80bb.css.map": "/Arunkumar-2358/expense-tracker-firebase-react/static/css/main.f1ef80bb.css.map",
+    "main.c6d007dc.js.map": "/Arunkumar-2358/expense-tracker-firebase-react/static/js/main.c6d007dc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f1ef80bb.css",
+    "static/js/main.c6d007dc.js"
+  ]
+}
