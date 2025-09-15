@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   query,
   collection,
@@ -12,15 +12,16 @@ import { useGetUserInfo } from "./useGetUserInfo";
 export const useGetTransactions = () => {
   const [transactions, setTransactions] = useState([]);
   const [transactionTotals, setTransactionTotals] = useState({
-    balance: 0.0,
-    income: 0.0,
-    expenses: 0.0,
+    balance: 0,
+    income: 0,
+    expenses: 0,
   });
 
   const transactionCollectionRef = collection(db, "transactions");
   const { userID } = useGetUserInfo();
 
-  const getTransactions = async () => {
+  // Use useCallback to make getTransactions stable for useEffect
+  const getTransactions = useCallback(() => {
     let unsubscribe;
     try {
       const queryTransactions = query(
@@ -45,8 +46,6 @@ export const useGetTransactions = () => {
           } else {
             totalIncome += Number(data.transactionAmount);
           }
-
-          console.log(totalExpenses, totalIncome);
         });
 
         setTransactions(docs);
@@ -62,12 +61,13 @@ export const useGetTransactions = () => {
       console.error(err);
     }
 
-    return () => unsubscribe();
-  };
+    return () => unsubscribe && unsubscribe();
+  }, [userID]); // userID is the only dependency
 
   useEffect(() => {
-    getTransactions();
-}, [getTransactions]);
+    const unsubscribe = getTransactions();
+    return unsubscribe; // cleanup on unmount
+  }, [getTransactions]);
 
   return { transactions, transactionTotals };
 };
